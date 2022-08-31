@@ -31,7 +31,7 @@ function Post() {
   }, []);
 
   return (
-    <div className="w-full flex flex-col gap-3 p-5 rounded-lg shadow bg-white">
+    <div className="w-full flex flex-col gap-3 p-5 rounded-lg drop-shadow shadow bg-white">
       {/* Post Topbar */}
       <div className="flex justify-between items-start">
         <PostUser />
@@ -81,7 +81,7 @@ function Post() {
       <PostDetailsDialog isOpen={isModalOpen} closeModal={closeModal} />
 
       <div>
-        <hr className="border-t-gray" />
+        <hr className="border-t-black/25" />
 
         {/* Post Actions (Likes, Comments, Shares, Saved) */}
         <div className="flex justify-between gap-3 my-1">
@@ -99,7 +99,7 @@ function Post() {
           />
         </div>
 
-        <hr className="border-t-gray" />
+        <hr className="border-t-black/25" />
       </div>
       {/* Post Direct Comment */}
       <NewComment />

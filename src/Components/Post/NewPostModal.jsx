@@ -9,6 +9,7 @@ import {
 import PostUser from "./PostUser";
 import FormTextArea from "../Form/FormTextArea";
 import FormFileField from "../Form/FormFileField";
+import PrimaryButton from "../../Components/PrimaryButton";
 
 function NewPostModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,15 +52,15 @@ function NewPostModal() {
         index <= 5 && (
           <div
             key={index}
-            className="relative max-h-36 flex items-center justify-center overflow-hidden rounded-lg shadow-md"
+            className="relative max-h-36 flex items-center justify-center overflow-hidden rounded-lg drop-shadow"
           >
             <img
               src={file.url}
               className="shrink-0 min-w-full min-h-full"
-              alt={file.data.name}
+              // alt={file.data.name}
             />
             {index >= 5 && (
-              <div className="absolute inset-0 bg-dark/60 flex items-center justify-center">
+              <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
                 <span className="text-2xl text-white font-semibold">
                   +{countExtraMedia()}
                 </span>
@@ -76,7 +77,7 @@ function NewPostModal() {
         <button className="p-2 cursor-pointer" onClick={openModal}>
           <IoImagesOutline
             size={28}
-            className="text-dark/40 cursor-pointer transition-colors hover:text-primary"
+            className="text-accent-light cursor-pointer transition-colors hover:text-accent-dark"
           />
         </button>
       </div>
@@ -91,27 +92,27 @@ function NewPostModal() {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-dark/25" />
+            <div className="fixed inset-0 bg-black/25" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
             <div className="min-h-full flex items-center justify-center">
               <Transition.Child>
-                <Dialog.Panel className="w-full md:w-[32rem] max-w-lg flex flex-col gap-2 p-3 transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all">
+                <Dialog.Panel className="w-full md:w-[32rem] max-w-lg flex flex-col gap-2 p-5 transform overflow-hidden rounded-lg bg-white text-left transition-all">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-dark/80 text-center p-3"
+                    className="text-lg font-medium leading-6 text-black/80 text-center p-2"
                   >
                     Create Post
                   </Dialog.Title>
-                  <hr className="border-t-gray" />
+                  <hr className="mb-2 border-t-black/25" />
                   <div className="flex justify-start">
                     <PostUser />
                   </div>
                   <form className="flex flex-col gap-5">
                     <FormTextArea
                       placeholder="What's in your mind, user?"
-                      extraCssClass="border-none"
+                      extraCssClass="border-none rounded-md "
                       rows={4}
                     />
 
@@ -120,9 +121,9 @@ function NewPostModal() {
                     )}
 
                     {postMedia.length !== 0 && (
-                      <div className="relative grid grid-cols-3 gap-3 p-3 rounded-md border border-gray">
+                      <div className="relative grid grid-cols-3 gap-3 p-3 rounded-md border border-black/50">
                         <div className="col-span-3 flex justify-between items-center">
-                          <label className="px-2 py-1 border border-gray rounded bg-white cursor-pointer font-semibold">
+                          <label className="px-2 py-1 border-2 border-black/50 text-black/80 rounded bg-white cursor-pointer font-semibold hover:border-accent hover:bg-accent hover:text-white transition-colors">
                             <span className="flex items-center gap-2">
                               <IoDuplicateOutline size={20} />
                               <span>Add Photos/Videos</span>
@@ -136,7 +137,7 @@ function NewPostModal() {
                           </label>
                           <button
                             type="button"
-                            className="p-0.5 rounded-full shadow-md border border-gray bg-white  text-dark/80"
+                            className="p-0.5 rounded-full shadow-md border border-black/50 bg-white text-black/50 hover:border-accent hover:text-accent"
                             onClick={closePostMedia}
                           >
                             <IoCloseOutline size={20} />
@@ -146,12 +147,7 @@ function NewPostModal() {
                         {renderPostMedia(postMedia)}
                       </div>
                     )}
-                    <button
-                      type="submit"
-                      className="w-full p-2 bg-primary text-white font-semibold rounded"
-                    >
-                      Post
-                    </button>
+                    <PrimaryButton>Post</PrimaryButton>
                   </form>
                 </Dialog.Panel>
               </Transition.Child>

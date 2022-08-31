@@ -6,22 +6,25 @@ import NewPostModal from "./NewPostModal";
 
 function NewPost() {
   return (
-    <div className="w-full p-5 rounded-lg shadow bg-white">
-      <h4 className="mb-2 text-dark/80 text-lg font-semibold">
+    <div className="w-full p-5 rounded-lg drop-shadow shadow bg-white">
+      <h4 className="mb-2 text-black/80 text-lg font-semibold">
         Post Something
       </h4>
 
-      <hr className="mb-3 border-t-gray" />
+      <hr className="mb-3 border-t-black/25" />
 
       <div className="flex justify-between items-center gap-2">
-        <Link to="/" className="p-2 rounded-full ring-2 ring-gray">
-          <IoPerson size={28} className="text-gray" />
+        <Link
+          to="/"
+          className="p-2 rounded-full ring-2 ring-accent-light hover:ring-accent-dark text-accent-light hover:text-accent-dark"
+        >
+          <IoPerson size={28} />
         </Link>
 
         <FormTextArea
           rows={1}
           placeholder="What's in your mind?"
-          extraCssClass="border-none rounded-full bg-gray/20"
+          extraCssClass="border-none rounded-full bg-accent/10"
         />
 
         <NewPostModal />
