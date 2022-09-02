@@ -6,7 +6,7 @@ import NewPostModal from "./NewPostModal";
 
 function NewPost() {
   return (
-    <div className="w-full p-5 rounded-lg drop-shadow shadow bg-white">
+    <div className="w-full p-5 rounded-lg shadow shadow-gray-light bg-white">
       <h4 className="mb-2 text-black/80 text-lg font-semibold">
         Post Something
       </h4>

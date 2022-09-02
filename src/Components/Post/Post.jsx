@@ -9,6 +9,7 @@ import PostUser from "./PostUser";
 import PostActionButton from "./PostActionButton";
 import NewComment from "../NewComment";
 import PostDetailsDialog from "./PostDetailsDialog";
+import PostActions from "./PostActions";
 
 function Post() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,7 +32,7 @@ function Post() {
   }, []);
 
   return (
-    <div className="w-full flex flex-col gap-3 p-5 rounded-lg drop-shadow shadow bg-white">
+    <div className="w-full flex flex-col gap-3 p-5 rounded-lg shadow shadow-gray-light bg-white">
       {/* Post Topbar */}
       <div className="flex justify-between items-start">
         <PostUser />
@@ -39,7 +40,7 @@ function Post() {
 
       {/* Post Content */}
       <div className="flex flex-col gap-3">
-        <p className=" leading-tight">
+        <p className="leading-tight text-black/90">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, maxime
           eligendi exercitationem fuga corporis delectus nulla, labore dolore
           numquam possimus quos laborum iste maiores laudantium. Rem quia
@@ -67,7 +68,7 @@ function Post() {
               alt=""
               className="shrink-0 min-w-full min-h-full"
             />
-            <div className="absolute inset-0 bg-dark/50 flex items-center justify-center">
+            <div className="absolute inset-0 bg-black/50 flex items-center justify-center backdrop-blur-sm backdrop-filter">
               <span className="text-xl text-white font-semibold">10+ More</span>
             </div>
           </div>
@@ -81,25 +82,12 @@ function Post() {
       <PostDetailsDialog isOpen={isModalOpen} closeModal={closeModal} />
 
       <div>
-        <hr className="border-t-black/25" />
+        <hr className="border-t-gray-light" />
 
         {/* Post Actions (Likes, Comments, Shares, Saved) */}
-        <div className="flex justify-between gap-3 my-1">
-          <PostActionButton
-            text="120k Likes"
-            leadingIcon={<IoHeartOutline size={20} />}
-          />
-          <PostActionButton
-            text="25 Comments"
-            leadingIcon={<IoChatboxOutline size={20} />}
-          />
-          <PostActionButton
-            text="231 Shares"
-            leadingIcon={<IoShareSocialOutline size={20} />}
-          />
-        </div>
+        <PostActions />
 
-        <hr className="border-t-black/25" />
+        <hr className="border-t-gray-light" />
       </div>
       {/* Post Direct Comment */}
       <NewComment />

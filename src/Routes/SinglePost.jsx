@@ -23,43 +23,6 @@ function SinglePost() {
         </p>
 
         <SinglePostMediaSlider />
-        {/* <div className="flex flex-col gap-3">
-          <div className="row-span-2 flex justify-center items-center overflow-hidden rounded-lg">
-            <img
-              src={process.env.PUBLIC_URL + "./dummy-1.jpg"}
-              alt=""
-              className="shrink-0 min-w-full min-h-full"
-            />
-          </div>
-
-          <div>
-            <hr className="border-t-gray" />
-            <PostActions />
-            <hr className="border-t-gray" />
-          </div>
-
-          <div className="flex justify-center items-center overflow-hidden rounded-lg">
-            <img
-              src={process.env.PUBLIC_URL + "./dummy-2.jpg"}
-              alt=""
-              className="shrink-0 min-w-full min-h-full"
-            />
-          </div>
-
-          <div>
-            <hr className="border-t-gray" />
-            <PostActions />
-            <hr className="border-t-gray" />
-          </div>
-
-          <div className="flex items-center justify-center overflow-hidden rounded-lg">
-            <img
-              src={process.env.PUBLIC_URL + "./dummy-3.jpg"}
-              alt=""
-              className="shrink-0 min-w-full min-h-full"
-            />
-          </div>
-        </div> */}
       </div>
 
       <div>

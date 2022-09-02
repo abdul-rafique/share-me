@@ -6,7 +6,7 @@ import UserMenu from "./UserMenu";
 
 export default function Navbar({ isUser }) {
   return (
-    <div className="fixed top-0 inset-x-0 z-20 px-5 py-2 flex justify-between items-center text-accent shadow backdrop-filter backdrop-blur">
+    <div className="fixed top-0 inset-x-0 z-20 px-5 py-2 flex justify-between items-center text-accent shadow bg-white">
       <Link to="/" className="text-2xl font-semibold">
         Logo
       </Link>

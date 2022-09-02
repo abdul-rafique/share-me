@@ -112,7 +112,7 @@ function NewPostModal() {
                   <form className="flex flex-col gap-5">
                     <FormTextArea
                       placeholder="What's in your mind, user?"
-                      extraCssClass="border-none rounded-md "
+                      extraCssClass="rounded-md "
                       rows={4}
                     />
 

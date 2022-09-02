@@ -6,7 +6,7 @@ function FormTextArea({ label, type, placeholder, id, extraCssClass, rows }) {
       <label htmlFor={`#${id}`}>{label}</label>
       <textarea
         type={type}
-        className={`block w-full focus:border-accent focus:ring-accent resize-none ${extraCssClass}`}
+        className={`block w-full border-gray focus:border-accent focus:ring-accent resize-none ${extraCssClass}`}
         placeholder={placeholder}
         id={id}
         rows={rows}

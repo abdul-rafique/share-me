@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase.config";
 
-import FormField from "../Components/FormField";
-import FormPasswordField from "../Components/FormPasswordField";
+import FormField from "../Components/Form/FormField";
+import FormPasswordField from "../Components/Form/FormPasswordField";
 import PrimaryButton from "../Components/PrimaryButton";
 
 export default function SignUp() {
@@ -44,73 +42,82 @@ export default function SignUp() {
   };
 
   return (
-    <div className="min-w-fit max-w-sm mx-auto my-10 p-8 border border-primary rounded shadow-md shadow-accent/50">
-      <h2 className="text-3xl font-semibold text-center mb-5 text-primary">
-        Sign Up
-      </h2>
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="min-w-fit max-w-sm p-8 rounded shadow shadow-gray bg-white">
+        <h2 className="text-3xl font-semibold text-center mb-5 text-accent">
+          Sign Up
+        </h2>
 
-      <form className="w-80">
-        <div className="mb-3">
-          <FormField
-            label="Username"
-            name="username"
-            type="text"
-            onChange={handleFieldChange}
-          />
-        </div>
+        <form className="w-80">
+          <div className="mb-3">
+            <FormField
+              label="Username"
+              name="username"
+              type="text"
+              onChange={handleFieldChange}
+            />
+          </div>
 
-        <div className="mb-3">
-          <FormField
-            label="Email"
-            name="email"
-            type="email"
-            onChange={handleFieldChange}
-          />
-        </div>
+          <div className="mb-3">
+            <FormField
+              label="Email"
+              name="email"
+              type="email"
+              onChange={handleFieldChange}
+            />
+          </div>
 
-        <div className="mb-3">
-          <FormPasswordField
-            label="Password"
-            name="pass"
-            onChange={handleFieldChange}
-          />
-        </div>
+          <div className="mb-3">
+            <FormPasswordField
+              label="Password"
+              name="pass"
+              onChange={handleFieldChange}
+            />
+          </div>
 
-        <div className="mb-3">
-          <FormPasswordField
-            label="Confirm Password"
-            name="confirmPass"
-            onChange={handleFieldChange}
-          />
-        </div>
+          <div className="mb-3">
+            <FormPasswordField
+              label="Confirm Password"
+              name="confirmPass"
+              onChange={handleFieldChange}
+            />
+          </div>
 
-        <div className="mb-3 flex items-start gap-2">
-          <input
-            type="checkbox"
-            name="accept_terms"
-            id="accept_terms"
-            className="mt-1 rounded text-primary border-gray focus:outline-primary"
-          />
-          <label htmlFor="#accept_terms" className="text-sm">
-            I agree to all <Link to="/signup">Terms & Conditions</Link> and{" "}
-            <Link to="/signup">Privacy Policy</Link>.
-          </label>
-        </div>
+          <div className="mb-3 flex items-start gap-2">
+            <input
+              type="checkbox"
+              name="accept_terms"
+              id="accept_terms"
+              className="mt-1 rounded text-accent border-gray focus:outline-accent"
+            />
+            <label htmlFor="#accept_terms" className="text-sm text-gray-dark">
+              I agree to all{" "}
+              <Link to="/signup" className="hover:text-accent underline">
+                Terms & Conditions
+              </Link>{" "}
+              and{" "}
+              <Link to="/signup" className="underline hover:text-accent">
+                Privacy Policy
+              </Link>
+              .
+            </label>
+          </div>
 
-        <PrimaryButton extraClasses="w-full">Sign Up</PrimaryButton>
-      </form>
+          <PrimaryButton extraClasses="w-full">Sign Up</PrimaryButton>
+        </form>
 
-      <hr className="my-3 border-t-dark/20" />
+        <hr className="my-3 border-t-gray-light" />
 
-      <p className="text-gray text-center">
-        Already have an account?{" "}
-        <Link
-          to="/login"
-          className="text-accent hover:text-primary transition-colors"
-        >
-          Login
-        </Link>
-      </p>
+        <p className="text-gray-dark text-center">
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            className="font-semibold text-accent-light hover:text-accent-dark transition-colors"
+          >
+            Login
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

@@ -15,7 +15,7 @@ function PostUser({ extraCssClasses }) {
         <span className="font-semibold text-black/80 leading-none">
           Post User
         </span>
-        <small className="text-black/50">07 June at 10:33 AM</small>
+        <small className="text-gray-dark">07 June at 10:33 AM</small>
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ import NewComment from "../NewComment";
 function PostDetailsDialog({ isOpen, closeModal }) {
   return (
     <Dialog open={isOpen} onClose={closeModal} className="relative z-30 h-full">
-      <div className="fixed inset-0 bg-dark" aria-hidden="true">
+      <div className="fixed inset-0 bg-black" aria-hidden="true">
         <div className="fixed inset-0 overflow-y-scroll lg:overflow-hidden">
           <Dialog.Panel className="w-full grid grid-cols-4 lg:min-h-screen lg:max-h-screen">
             {/* Dialog Left Section */}
@@ -38,11 +38,9 @@ function PostDetailsDialog({ isOpen, closeModal }) {
 
             {/* Dialog Right Section */}
             <section className="lg:relative flex flex-col gap-3 pb-16 bg-white md:col-span-4 lg:col-span-1 lg:min-h-screen lg:max-h-screen">
-              <div className="max-w-fit p-2 pb-0 self-end hidden lg:block">
-                <UserAvatar color="dark" size={20} padding={2} />
+              <div className="flex justify-end p-3 shadow">
+                <UserAvatar color="accent" size={20} padding={2} />
               </div>
-
-              <hr className="border-t-gray" />
 
               <div className="px-4">
                 <PostUser />
@@ -53,9 +51,9 @@ function PostDetailsDialog({ isOpen, closeModal }) {
                   nesciunt.
                 </p>
 
-                <hr className="border-t-gray" />
+                <hr className="border-t-black/25" />
                 <PostActions />
-                <hr className="border-t-gray" />
+                <hr className="border-t-black/25" />
               </div>
 
               {/* Comments Section */}
@@ -75,7 +73,7 @@ function PostDetailsDialog({ isOpen, closeModal }) {
 
               {/* New Comment */}
 
-              <div className="fixed lg:absolute bottom-0 inset-x-0 bg-white p-3 shadow">
+              <div className="fixed lg:absolute bottom-0 inset-x-0 bg-white p-3 border-t-2 border-black/10">
                 <NewComment />
               </div>
             </section>

@@ -23,6 +23,11 @@ module.exports = {
       },
       white: "#fff",
       black: "#000",
+      gray: {
+        light: "#cccccc",
+        DEFAULT: "#b3b3b3",
+        dark: "#999999",
+      },
       transparent: colors.transparent,
     },
   },

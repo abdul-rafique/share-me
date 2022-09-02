@@ -10,7 +10,7 @@ function PostActions() {
   return (
     <div className="flex justify-between gap-3 my-1">
       <PostActionButton
-        text="Likes"
+        text="Like"
         leadingIcon={<IoHeartOutline size={20} />}
       />
       <PostActionButton

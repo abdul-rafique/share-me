@@ -1,36 +1,36 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import FormField from "../Components/FormField";
+import FormField from "../Components/Form/FormField";
+import PrimaryButton from "../Components/PrimaryButton";
 
 function ForgotPass() {
   return (
-    <div className="min-w-fit max-w-sm mx-auto my-10 p-8 border border-primary rounded shadow-md shadow-accent/50">
-      <h2 className="text-3xl font-semibold text-center mb-5 text-primary">
-        Login
-      </h2>
-      <form action="" className="w-80">
-        <div className="mb-3">
-          <FormField label="Username or Email" type="text" />
-        </div>
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="min-w-fit max-w-sm p-8 rounded shadow shadow-gray bg-white">
+        <h2 className="text-3xl font-semibold text-center mb-5 text-accent">
+          Login
+        </h2>
+        <form className="w-80">
+          <div className="mb-3">
+            <FormField label="Username or Email" type="text" />
+          </div>
 
-        <button
-          type="submit"
-          className="w-full p-2.5 my-3 bg-primary text-white font-semibold rounded"
-        >
-          Send me link
-        </button>
-      </form>
-      <hr className="my-3 border-t-dark/20" />
+          <PrimaryButton as="submit" extraClasses="w-full my-3">
+            Send me link
+          </PrimaryButton>
+        </form>
+        <hr className="my-3 border-t-gray-light" />
 
-      <p className="text-dark/40 text-center">
-        Know your password?{" "}
-        <Link
-          to="/login"
-          className="text-accent hover:text-primary transition-colors"
-        >
-          Login Now
-        </Link>
-      </p>
+        <p className="text-gray text-center">
+          Know your password?{" "}
+          <Link
+            to="/login"
+            className="font-semibold text-accent-light hover:text-accent-dark transition-colors"
+          >
+            Login Now
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

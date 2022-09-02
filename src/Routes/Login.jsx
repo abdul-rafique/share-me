@@ -1,60 +1,62 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import FormField from "../Components/FormField";
-import FormPasswordField from "../Components/FormPasswordField";
+import FormField from "../Components/Form/FormField";
+import FormPasswordField from "../Components/Form/FormPasswordField";
 import PrimaryButton from "../Components/PrimaryButton";
 
 export default function Login() {
   return (
-    <div className="min-w-fit max-w-sm mx-auto my-10 p-8 border border-primary rounded shadow-md shadow-accent/50">
-      <h2 className="text-3xl font-semibold text-center mb-5 text-primary">
-        Login
-      </h2>
-      <form action="" className="w-80">
-        <div className="mb-3">
-          <FormField label="Username or Email" type="text" />
-        </div>
-        <div className="mb-3">
-          <FormPasswordField />
-        </div>
-
-        <div className="mb-3 flex justify-between">
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              name="remember"
-              id="remember"
-              className="rounded text-primary border-gray focus:outline-primary"
-            />
-            <label htmlFor="#remember" className="text-sm">
-              Remember me
-            </label>
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="min-w-fit max-w-sm p-8 rounded shadow shadow-gray bg-white">
+        <h2 className="text-3xl font-semibold text-center mb-5 text-accent">
+          Login
+        </h2>
+        <form action="" className="w-80">
+          <div className="mb-3">
+            <FormField label="Username or Email" type="text" />
+          </div>
+          <div className="mb-3">
+            <FormPasswordField />
           </div>
 
+          <div className="mb-3 flex justify-between">
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                name="remember"
+                id="remember"
+                className="rounded text-accent border-gray focus:outline-accent"
+              />
+              <label htmlFor="#remember" className="text-sm text-gray-dark">
+                Remember me
+              </label>
+            </div>
+
+            <Link
+              to="/forgot-password"
+              className="font-semibold text-accent-light hover:text-accent-dark"
+            >
+              Forgot password?
+            </Link>
+          </div>
+
+          <PrimaryButton as="submit" extraClasses="w-full">
+            Login
+          </PrimaryButton>
+        </form>
+        <hr className="my-3 border-t-dark/20" />
+
+        <p className="text-gray-dark text-center">
+          Don't have an account?{" "}
           <Link
-            to="/forgot-password"
-            className="text-accent hover:text-primary"
+            to="/signup"
+            className="font-semibold text-accent-light hover:text-accent-dark transition-colors"
           >
-            Forgot password?
+            Signup Now
           </Link>
-        </div>
-
-        <PrimaryButton as="submit" extraClasses="w-full">
-          Login
-        </PrimaryButton>
-      </form>
-      <hr className="my-3 border-t-dark/20" />
-
-      <p className="text-dark/40 text-center">
-        Don't have an account?{" "}
-        <Link
-          to="/signup"
-          className="text-accent hover:text-primary transition-colors"
-        >
-          Signup Now
-        </Link>
-      </p>
+        </p>
+      </div>
     </div>
   );
 }
