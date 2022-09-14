@@ -20,7 +20,7 @@
  * ----------------------------------------
  */
 
-  @keyframes shake-horizontal {
+  @keyframes shake {
     0%,
     100% {
       -webkit-transform: translateX(0);

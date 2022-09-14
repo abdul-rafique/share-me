@@ -1,19 +1,22 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-// import { createUserWithEmailAndPassword } from 'firebase/auth'
-// import { auth } from '../../firebase.config'
+import { Link, useNavigate } from 'react-router-dom'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../../firebase.config'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { useDispatch } from 'react-redux'
+import { login } from '../features/user/userSlice'
 
 import FormField from '../Components/Form/FormField'
 import FormPasswordField from '../Components/Form/FormPasswordField'
 import PrimaryButton from '../Components/PrimaryButton'
+import { ClipLoader } from 'react-spinners'
 
 const newUserSchema = yup.object({
-    username: yup.string().required('Required'),
+    name: yup.string().required('Required'),
     email: yup.string().email().required('Required'),
-    password: yup.string().required('Required'),
+    password: yup.string().required('Required').min(8),
     confirmPassword: yup
         .string()
         .required('Required')
@@ -21,22 +24,47 @@ const newUserSchema = yup.object({
             [yup.ref('password'), null],
             'password and confirm password does not match.'
         ),
+    termsPolicy: yup.bool().oneOf([true]),
 })
 
+const defaultValues = {
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    termsPolicy: false,
+}
+
 export default function SignUp() {
+    let navigate = useNavigate()
+    const dispatch = useDispatch()
+    const [isLoading, setIsLoading] = useState(false)
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        reset,
+        control,
+        formState: { errors, isDirty, isValid },
     } = useForm({
-        mode: 'onBlur',
+        mode: 'all',
         resolver: yupResolver(newUserSchema),
+        defaultValues,
     })
 
-    const [acceptTerms, setAcceptTerms] = useState(false)
+    const onSubmit = (data) => {
+        createUserWithEmailAndPassword(auth, data.email, data.password)
+            .then((userData) => {
+                reset()
+                userData.user.displayName = data.name
 
-    const handleAcceptTerms = () => {
-        setAcceptTerms(!acceptTerms)
+                dispatch(login(userData))
+                setTimeout(() => {
+                    navigate('/', { replace: true })
+                }, 1000)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
     return (
@@ -48,19 +76,18 @@ export default function SignUp() {
 
                 <form
                     method="post"
-                    onSubmit={handleSubmit((data) => {
-                        console.info(data)
-                        console.log(errors)
-                    })}
+                    onSubmit={handleSubmit(onSubmit)}
                     className="w-80"
                 >
                     <div className="mb-3">
                         <FormField
                             type="text"
-                            label="Username *"
-                            error={errors.username}
-                            register={register('username')}
-                            autoComplete="username"
+                            label="Name *"
+                            identity="name"
+                            error={errors.name}
+                            register={register('name')}
+                            autoComplete="name"
+                            control={control}
                         />
                     </div>
 
@@ -71,6 +98,7 @@ export default function SignUp() {
                             error={errors.email}
                             register={register('email')}
                             autoComplete="email"
+                            control={control}
                         />
                     </div>
 
@@ -81,6 +109,7 @@ export default function SignUp() {
                             autoComplete="new-password"
                             error={errors.password}
                             register={register('password')}
+                            control={control}
                         />
                     </div>
                     <div className="mb-3">
@@ -90,20 +119,25 @@ export default function SignUp() {
                             autoComplete="new-password"
                             error={errors.confirmPassword}
                             register={register('confirmPassword')}
+                            control={control}
                         />
                     </div>
 
                     <div className="mb-3 flex items-start gap-2">
                         <input
                             type="checkbox"
-                            id="acceptTerms"
-                            name="acceptTerms"
-                            onChange={handleAcceptTerms}
+                            id="termsPolicy"
                             className="mt-1 rounded text-accent border-gray focus:outline-accent"
+                            {...register('termsPolicy')}
+                            control={control}
                         />
                         <label
-                            htmlFor="#acceptTerms"
-                            className="text-sm text-gray-dark"
+                            htmlFor="#termsPolicy"
+                            className={`text-sm ${
+                                errors.termsPolicy
+                                    ? 'text-danger'
+                                    : 'text-gray-dark'
+                            }`}
                         >
                             I agree to all{' '}
                             <Link
@@ -123,8 +157,16 @@ export default function SignUp() {
                         </label>
                     </div>
 
-                    <PrimaryButton block as="submit" disabled={!acceptTerms}>
-                        Sign Up
+                    <PrimaryButton
+                        block
+                        as="submit"
+                        disabled={!isDirty || !isValid}
+                    >
+                        {!isLoading ? (
+                            <ClipLoader color="#fff" size={25} />
+                        ) : (
+                            'Sign Up'
+                        )}
                     </PrimaryButton>
                 </form>
 

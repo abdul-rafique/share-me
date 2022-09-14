@@ -11,7 +11,7 @@ export default function Navbar({ isUser }) {
                 Logo
             </Link>
 
-            {isUser === true ? (
+            {isUser ? (
                 <UserMenu />
             ) : (
                 <div className="flex items-center gap-3">

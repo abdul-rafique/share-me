@@ -2,14 +2,26 @@ import React, { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { Link } from 'react-router-dom'
 import { IoCaretDown } from 'react-icons/io5'
+import { useDispatch } from 'react-redux'
+import { logout } from '../features/user/userSlice'
+import { auth } from '../../firebase.config'
+
 import UserAvatar from './UserAvatar'
 
 function UserMenu() {
+    const dispatch = useDispatch()
     const menuItems = [
         { itemName: 'Profile', url: 'user' },
         { itemName: 'Settings', url: '/user/settings' },
-        { itemName: 'Logout', url: '/' },
     ]
+
+    const onLogout = () => {
+        auth.signOut()
+
+        if (auth.currentUser) {
+            dispatch(logout())
+        }
+    }
 
     return (
         <Menu as="div" className="relative inline-block text-left">
@@ -43,7 +55,7 @@ function UserMenu() {
                                         to={item.url}
                                         className={`${
                                             active
-                                                ? 'bg-primary-light text-accent'
+                                                ? 'bg-primary-light/50 text-accent'
                                                 : 'text-gray'
                                         } group flex w-full items-center rounded-md p-2 text-sm font-semibold`}
                                     >
@@ -52,6 +64,21 @@ function UserMenu() {
                                 )}
                             </Menu.Item>
                         ))}
+                        <Menu.Item>
+                            {({ active }) => (
+                                <button
+                                    as="button"
+                                    className={`${
+                                        active
+                                            ? 'bg-primary-light/50 text-accent'
+                                            : 'text-gray'
+                                    } flex w-full items-center rounded-md p-2 text-sm font-semibold`}
+                                    onClick={onLogout}
+                                >
+                                    Logout
+                                </button>
+                            )}
+                        </Menu.Item>
                     </div>
                 </Menu.Items>
             </Transition>

@@ -1,8 +1,6 @@
 import React from 'react'
 
-function FormField(props) {
-    const { type, identity, label, error, register, ...otherProps } = props
-
+function FormField({ type, identity, label, error, register, ...otherProps }) {
     return (
         <>
             <label htmlFor={`#${identity}`} className="text-gray-dark">
@@ -12,7 +10,7 @@ function FormField(props) {
                 type={type}
                 className={`block w-full rounded border focus:border-accent focus:ring-accent ${
                     error
-                        ? 'border-danger ring-1 ring-danger shake focus:border-danger focus:ring-danger'
+                        ? 'border-danger ring-1 ring-danger shake'
                         : 'border-gray'
                 }`}
                 {...register}
