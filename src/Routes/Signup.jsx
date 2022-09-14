@@ -162,7 +162,7 @@ export default function SignUp() {
                         as="submit"
                         disabled={!isDirty || !isValid}
                     >
-                        {!isLoading ? (
+                        {isLoading ? (
                             <ClipLoader color="#fff" size={25} />
                         ) : (
                             'Sign Up'
