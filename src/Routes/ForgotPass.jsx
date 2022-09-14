@@ -15,7 +15,7 @@ function ForgotPass() {
             <FormField label="Username or Email" type="text" />
           </div>
 
-          <PrimaryButton as="submit" extraClasses="w-full my-3">
+          <PrimaryButton as="submit" block>
             Send me link
           </PrimaryButton>
         </form>

@@ -2,15 +2,17 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function PrimaryButton(props) {
-  const { as, children, extraClasses, link } = props;
+  const { as, children, block = false, link, ...otherProps } = props;
 
   switch (as) {
     case "submit":
       return (
         <button
           type="submit"
-          className={`px-4 py-1.5 bg-accent text-white font-semibold border-transparent rounded border-2 hover:bg-accent-dark hover:text-white transition-colors duration-200 ${extraClasses}`}
-          {...props}
+          className={`px-4 py-1.5 bg-accent text-white font-semibold border-transparent rounded border-2 hover:bg-accent-dark hover:text-white transition-colors duration-200 disabled:bg-accent/50 ${
+            block && "w-full"
+          }`}
+          {...otherProps}
         >
           {children}
         </button>
@@ -20,8 +22,10 @@ function PrimaryButton(props) {
       return (
         <Link
           to={link || "/"}
-          className={`px-4 py-1.5 bg-accent text-white font-semibold border-transparent rounded border-2 hover:bg-accent-dark hover:text-white transition-colors duration-200 ${extraClasses}`}
-          {...props}
+          className={`px-4 py-1.5 bg-accent text-white font-semibold border-transparent rounded border-2 hover:bg-accent-dark hover:text-white transition-colors duration-200 disabled:bg-accent/50 ${
+            block && "w-full"
+          }`}
+          {...otherProps}
         >
           {children}
         </Link>
@@ -31,8 +35,10 @@ function PrimaryButton(props) {
       return (
         <button
           type="button"
-          className={`px-4 py-1.5 bg-accent text-white font-semibold border-transparent rounded border-2 hover:bg-accent-dark hover:text-white transition-colors duration-200 ${extraClasses}`}
-          {...props}
+          className={`px-4 py-1.5 bg-accent text-white font-semibold border-transparent rounded border-2 hover:bg-accent-dark hover:text-white transition-colors duration-200 disabled:bg-accent/50 ${
+            block && "w-full"
+          }`}
+          {...otherProps}
         >
           {children}
         </button>
