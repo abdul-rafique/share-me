@@ -2,17 +2,19 @@ import React, { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { Link } from 'react-router-dom'
 import { IoCaretDown } from 'react-icons/io5'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../features/user/userSlice'
 import { auth } from '../../firebase.config'
 
 import UserAvatar from './UserAvatar'
+import { useEffect } from 'react'
 
 function UserMenu() {
+    const isUser = useSelector((state) => state.user.user)
     const dispatch = useDispatch()
     const menuItems = [
-        { itemName: 'Profile', url: 'user' },
-        { itemName: 'Settings', url: '/user/settings' },
+        { itemName: 'Profile', url: 'profile' },
+        { itemName: 'Settings', url: '/profile/settings' },
     ]
 
     const onLogout = () => {
@@ -25,7 +27,10 @@ function UserMenu() {
 
     return (
         <Menu as="div" className="relative inline-block text-left">
-            <div>
+            <div className="flex items-center">
+                <span className="block min-w-fit font-semibold">
+                    {(!isUser && isUser.user.displayName) || 'No Name'}
+                </span>
                 <Menu.Button
                     className={`rounded-md px-3 py-1.5 w-full flex items-center gap-2`}
                 >

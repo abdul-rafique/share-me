@@ -52,12 +52,15 @@ export default function SignUp() {
     })
 
     const onSubmit = (data) => {
+        setIsLoading(true)
+
         createUserWithEmailAndPassword(auth, data.email, data.password)
-            .then((userData) => {
+            .then(async (userData) => {
                 reset()
                 userData.user.displayName = data.name
 
                 dispatch(login(userData))
+                setIsLoading(false)
                 setTimeout(() => {
                     navigate('/', { replace: true })
                 }, 1000)

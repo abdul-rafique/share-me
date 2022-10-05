@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../firebase.config'
 import { useDispatch, useSelector } from 'react-redux'
 import { login, logout } from '../features/user/userSlice'
@@ -20,6 +20,7 @@ const loginSchema = yup.object({
 
 export default function Login() {
     const isUser = useSelector((state) => state.user.user)
+
     const dispatch = useDispatch()
     let navigate = useNavigate()
     const {
@@ -40,14 +41,19 @@ export default function Login() {
     const [credentialsErr, setCredentialsErr] = useState()
 
     useEffect(() => {
-        if (auth.currentUser) {
-            dispatch(login(auth.currentUser))
-            setTimeout(() => {
-                navigate('/', { replace: true })
-            }, 500)
-        } else {
-            dispatch(logout())
-        }
+        setIsLoading(true)
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                dispatch(login(user))
+                setTimeout(() => {
+                    setIsLoading(false)
+                    navigate('/', { replace: true })
+                }, 500)
+            } else {
+                dispatch(logout())
+            }
+        })
     }, [])
 
     const onSubmit = (data) => {
