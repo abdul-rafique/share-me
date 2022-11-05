@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+  overflow: hidden;
+}
+
+
+.wrapper {
+  height: calc(100vh - 104px);
+  @apply overflow-y-scroll;
+}
+
 .shake {
 	-webkit-animation: shake 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 	        animation: shake 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;

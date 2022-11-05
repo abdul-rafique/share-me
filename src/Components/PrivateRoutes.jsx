@@ -1,37 +1,34 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useCallback, useState } from 'react'
+import { Navigate, Outlet, useNavigate } from 'react-router-dom'
+import { authenticationSelector } from '../features/auth/auth.selector'
 import { useDispatch, useSelector } from 'react-redux'
-import { Navigate, Outlet } from 'react-router-dom'
-import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../../firebase.config'
-import { login, logout } from '../features/user/userSlice'
+import { login, logout } from '../features/auth/auth.slice'
 import { ClipLoader } from 'react-spinners'
 
 function PrivateRoutes({ component: RouteComponent, ...otherProps }) {
-    const isUser = useSelector((state) => state.user.user)
-    const dispatch = useDispatch()
-    const [isLoading, setIsLoading] = useState(true)
+    const isAuthenticated = useSelector(authenticationSelector)
+    // let navigate = useNavigate()
 
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                dispatch(login(user))
-                setIsLoading(false)
-            } else {
-                dispatch(logout())
-                setIsLoading(false)
-            }
-        })
-    }, [])
+    // useEffect(() => {
+    //     const unsubscribe = () => {
+    //         setTimeout(() => {
+    //             navigate('/login', { replace: true })
+    //         }, 1000)
+    //     }
 
-    if (isLoading) {
-        return (
-            <div className="w-full h-screen flex justify-center items-center text-2xl font-semibold">
-                <ClipLoader color="#4464ad" size={48} />
-            </div>
-        )
-    }
+    //     unsubscribe()
+    // }, [isAuthenticated])
 
-    return !!isUser ? <Outlet /> : <Navigate to="/login" />
+    // if (isAuthenticated === undefined) {
+    //     return (
+    //         <div className="w-full h-screen flex justify-center items-center text-2xl font-semibold">
+    //             <ClipLoader color="#4464ad" size={48} />
+    //         </div>
+    //     )
+    // } else {
+    return <>{isAuthenticated ? <Outlet /> : <Navigate to="/login" />}</>
+    // }
 }
 
 export default PrivateRoutes

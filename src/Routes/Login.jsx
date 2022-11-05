@@ -3,26 +3,29 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../../firebase.config'
+import { ClipLoader } from 'react-spinners'
 import { useDispatch, useSelector } from 'react-redux'
-import { login, logout } from '../features/user/userSlice'
+import { login } from '../features/auth/auth.slice'
+import {
+    authenticationSelector,
+    loginSelector,
+} from '../features/auth/auth.selector'
 
 import FormField from '../Components/Form/FormField'
 import FormPasswordField from '../Components/Form/FormPasswordField'
 import PrimaryButton from '../Components/PrimaryButton'
-import { ClipLoader } from 'react-spinners'
 
 const loginSchema = yup.object({
-    identifier: yup.string().email().required('Required'),
+    email: yup.string().email().required('Required'),
     password: yup.string().required('Required'),
 })
 
 export default function Login() {
-    const isUser = useSelector((state) => state.user.user)
-
+    const isAuthenticated = useSelector(authenticationSelector)
+    const { isLoading, isError } = useSelector(loginSelector)
     const dispatch = useDispatch()
     let navigate = useNavigate()
+
     const {
         register,
         handleSubmit,
@@ -32,77 +35,55 @@ export default function Login() {
         mode: 'all',
         resolver: yupResolver(loginSchema),
         defaultValues: {
-            identifier: '',
+            email: '',
             password: '',
         },
     })
 
-    const [isLoading, setIsLoading] = useState(false)
     const [credentialsErr, setCredentialsErr] = useState()
 
     useEffect(() => {
-        setIsLoading(true)
+        if (isAuthenticated) {
+            setTimeout(() => {
+                navigate('/', { replace: true })
+            }, 1000)
+        }
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                dispatch(login(user))
-                setTimeout(() => {
-                    setIsLoading(false)
-                    navigate('/', { replace: true })
-                }, 500)
-            } else {
-                dispatch(logout())
+        if (isError) {
+            switch (isError?.code) {
+                case 'auth/wrong-password':
+                    setCredentialsErr(
+                        'You enetered wrong password. If you forgot your password click on the "Forgot password" link below to reset your password.'
+                    )
+                    break
+
+                case 'auth/user-not-found':
+                    setCredentialsErr(
+                        'This email is not registered. Please! click on the "Signup Now" link below to register.'
+                    )
+                    break
+
+                case 'auth/too-many-requests':
+                    setCredentialsErr(
+                        'Too many requests! Access to this account has been temporarily disabled. You can immediately restore it by resetting your password or you can try again later.'
+                    )
+                    break
+
+                case 'auth/network-request-failed':
+                    setCredentialsErr(
+                        'Network connection failed. Please check your internet connection!'
+                    )
+                    break
+
+                default:
+                    setCredentialsErr('Something went wrong. Try again later.')
+                    break
             }
-        })
-    }, [])
+        }
+    }, [isAuthenticated])
 
-    const onSubmit = (data) => {
-        setIsLoading(true)
-
-        signInWithEmailAndPassword(auth, data.identifier, data.password)
-            .then((credentials) => {
-                dispatch(login(credentials))
-                setIsLoading(false)
-                setTimeout(() => {
-                    navigate('/', { replace: true })
-                }, 500)
-            })
-            .catch((err) => {
-                console.log(err.code)
-                console.log(err.message)
-                switch (err.code) {
-                    case 'auth/wrong-password':
-                        setCredentialsErr(
-                            'You enetered wrong password. If you forgot your password click on the "Forgot password" link below to reset your password.'
-                        )
-                        break
-
-                    case 'auth/user-not-found':
-                        setCredentialsErr(
-                            'This email is not registered. Please! click on the "Signup Now" link below to register.'
-                        )
-                        break
-
-                    case 'auth/too-many-requests':
-                        setCredentialsErr(
-                            'Too many requests! Access to this account has been temporarily disabled. You can immediately restore it by resetting your password or you can try again later.'
-                        )
-                        break
-
-                    case 'auth/network-request-failed':
-                        setCredentialsErr(
-                            'Network connection failed. Please check your internet connection!'
-                        )
-                        break
-
-                    default:
-                        setCredentialsErr(
-                            'Something went wrong. Try again later.'
-                        )
-                        break
-                }
-                setIsLoading(false)
-            })
+    const onSubmit = async (data) => {
+        dispatch(login({ ...data, isLoggedIn: false }))
     }
 
     return (
@@ -126,8 +107,8 @@ export default function Login() {
                             type="email"
                             label="Email"
                             autoComplete="email"
-                            register={register('identifier')}
-                            error={errors.identifier}
+                            register={register('email')}
+                            error={errors.email}
                             control={control}
                         />
                     </div>

@@ -2,6 +2,7 @@
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
+import { getStorage, ref } from 'firebase/storage'
 
 // dotenv.config();
 
@@ -20,3 +21,8 @@ const app = initializeApp(firebaseConfig)
 export const auth = getAuth(app)
 
 export const db = getFirestore()
+
+// Storage
+export const storage = getStorage(app)
+
+export const storageRef = ref(storage, 'users')

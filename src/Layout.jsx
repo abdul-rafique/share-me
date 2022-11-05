@@ -4,10 +4,10 @@ import Navbar from './Components/Navbar'
 import Container from './Components/Container'
 import { Outlet } from 'react-router-dom'
 
-function Layout({ isUser }) {
+function Layout() {
     return (
-        <div>
-            <Navbar isUser={isUser} />
+        <div className="h-screen overflow-hidden">
+            <Navbar />
             <Container>
                 <Outlet />
             </Container>

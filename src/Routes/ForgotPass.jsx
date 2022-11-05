@@ -10,9 +10,15 @@ import FormField from '../Components/Form/FormField'
 import PrimaryButton from '../Components/PrimaryButton'
 import { ClipLoader } from 'react-spinners'
 import Alert from '../Components/Alert'
+import { useDispatch, useSelector } from 'react-redux'
+import { resetpasswordSelector } from '../features/auth/auth.selector'
+import { resetpassword } from '../features/auth/auth.slice'
 
 function ForgotPass() {
-    const [isLoading, setIsLoading] = useState(false)
+    // const [isLoading, setIsLoading] = useState(false)
+    const { isLoading } = useSelector(resetpasswordSelector)
+    const dispatch = useDispatch()
+
     const [forgotPassErr, setForgotPassErr] = useState()
     const [forgotPassSuccess, setForgotPassSuccess] = useState()
     const {
@@ -29,34 +35,32 @@ function ForgotPass() {
     })
 
     const onSubmit = (data) => {
-        setIsLoading(true)
+        dispatch(resetpassword(data))
 
-        sendPasswordResetEmail(auth, data.email)
-            .then(() => {
-                setIsLoading(false)
-                setForgotPassSuccess(data.email)
-            })
-            .catch((err) => {
-                setIsLoading(false)
-                console.log(err.code)
-                console.log(err.message)
-
-                switch (err.code) {
-                    case 'auth/user-not-found':
-                        setForgotPassErr('Sorry! user not found.')
-                        break
-
-                    case 'auth/network-request-failed':
-                        setForgotPassErr(
-                            'Network connection failed. Please! Check your internet connection.'
-                        )
-                        break
-
-                    default:
-                        setForgotPassErr('Something went wrong.')
-                        break
-                }
-            })
+        // setIsLoading(true)
+        // sendPasswordResetEmail(auth, data.email)
+        //     .then(() => {
+        //         setIsLoading(false)
+        //         setForgotPassSuccess(data.email)
+        //     })
+        //     .catch((err) => {
+        //         setIsLoading(false)
+        //         console.log(err.code)
+        //         console.log(err.message)
+        //         switch (err.code) {
+        //             case 'auth/user-not-found':
+        //                 setForgotPassErr('Sorry! user not found.')
+        //                 break
+        //             case 'auth/network-request-failed':
+        //                 setForgotPassErr(
+        //                     'Network connection failed. Please! Check your internet connection.'
+        //                 )
+        //                 break
+        //             default:
+        //                 setForgotPassErr('Something went wrong.')
+        //                 break
+        //         }
+        //     })
     }
 
     return (

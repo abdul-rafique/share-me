@@ -1,17 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../firebase.config'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { useDispatch } from 'react-redux'
-import { login } from '../features/user/userSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 import FormField from '../Components/Form/FormField'
 import FormPasswordField from '../Components/Form/FormPasswordField'
 import PrimaryButton from '../Components/PrimaryButton'
 import { ClipLoader } from 'react-spinners'
+import { signup } from '../features/auth/auth.slice'
+import { signupSelector } from '../features/auth/auth.selector'
 
 const newUserSchema = yup.object({
     name: yup.string().required('Required'),
@@ -36,9 +37,8 @@ const defaultValues = {
 }
 
 export default function SignUp() {
-    let navigate = useNavigate()
+    const { isLoading, isError } = useSelector(signupSelector)
     const dispatch = useDispatch()
-    const [isLoading, setIsLoading] = useState(false)
     const {
         register,
         handleSubmit,
@@ -51,8 +51,11 @@ export default function SignUp() {
         defaultValues,
     })
 
+    useEffect(() => {
+        console.log(isError)
+    }, [])
     const onSubmit = (data) => {
-        setIsLoading(true)
+        // dispatch(signup(data))
 
         createUserWithEmailAndPassword(auth, data.email, data.password)
             .then(async (userData) => {

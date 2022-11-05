@@ -3,14 +3,18 @@ import { Menu, Transition } from '@headlessui/react'
 import { Link } from 'react-router-dom'
 import { IoCaretDown } from 'react-icons/io5'
 import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../features/user/userSlice'
 import { auth } from '../../firebase.config'
 
 import UserAvatar from './UserAvatar'
-import { useEffect } from 'react'
+import {
+    authenticationSelector,
+    userSelector,
+} from '../features/auth/auth.selector'
+import { logout } from '../features/auth/auth.slice'
 
 function UserMenu() {
-    const isUser = useSelector((state) => state.user.user)
+    const isAuthenticated = useSelector(authenticationSelector)
+    const user = useSelector(userSelector)
     const dispatch = useDispatch()
     const menuItems = [
         { itemName: 'Profile', url: 'profile' },
@@ -18,18 +22,14 @@ function UserMenu() {
     ]
 
     const onLogout = () => {
-        auth.signOut()
-
-        if (auth.currentUser) {
-            dispatch(logout())
-        }
+        dispatch(logout())
     }
 
     return (
         <Menu as="div" className="relative inline-block text-left">
             <div className="flex items-center">
                 <span className="block min-w-fit font-semibold">
-                    {(!isUser && isUser.user.displayName) || 'No Name'}
+                    {(!isAuthenticated && user.displayName) || 'No Name'}
                 </span>
                 <Menu.Button
                     className={`rounded-md px-3 py-1.5 w-full flex items-center gap-2`}
